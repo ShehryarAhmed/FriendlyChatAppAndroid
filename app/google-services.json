@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "51060885019",
+    "firebase_url": "https://firbaseweekend.firebaseio.com",
+    "project_id": "firbaseweekend",
+    "storage_bucket": "firbaseweekend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51060885019:android:7b123090f8f5db96",
+        "android_client_info": {
+          "package_name": "com.example.android.friendlychat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51060885019-44b2hdfcgombna3s9nfo0740eighnm3l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnjyZYAtGRnweNIiFDrR3lQGdQQnrzmQw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
