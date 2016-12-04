@@ -3,6 +3,7 @@ package com.example.android.friendlychat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -77,5 +78,22 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        mMessageEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(DEFAULT_MSG_LENGTH_LIMIT)});
+
+        mSendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Todo send message on click listner
+
+
+                //Clear input
+
+                mMessageEditText.setText("");
+                
+            }
+        });
     }
+
+
 }
