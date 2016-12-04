@@ -8,6 +8,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
@@ -38,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
         mPhotoPickerButton = (ImageButton) findViewById(R.id.photoPickerButton);
         mMessageEditText = (EditText) findViewById(R.id.messageEditText);
         mSendButton = (Button) findViewById(R.id.sendButton);
+
+        List<ChatMessages> chatMessages = new ArrayList<>();
+
+        mMessageAdapter = new MessageAdapter(this,R.layout.chat_messages,chatMessages);
+
+        mMessageListView.setAdapter(mMessageAdapter);
+
+        
 
     }
 }
