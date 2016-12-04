@@ -2,6 +2,7 @@ package com.example.android.friendlychat;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -48,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         mMessageListView.setAdapter(mMessageAdapter);
 
-        
+        //initialize progressBar
+        mProgressBar.setVisibility(View.INVISIBLE);
 
     }
 }
