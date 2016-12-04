@@ -27,5 +27,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mUsername = ANONYMOUS;
+
+        mUsername = ANONYMOUS;
+
+        // Initialize references to views
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mMessageListView = (ListView) findViewById(R.id.messageListView);
+        mPhotoPickerButton = (ImageButton) findViewById(R.id.photoPickerButton);
+        mMessageEditText = (EditText) findViewById(R.id.messageEditText);
+        mSendButton = (Button) findViewById(R.id.sendButton);
+
     }
 }
