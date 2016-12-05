@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         mfirebaseDatabase = FirebaseDatabase.getInstance();
 
         mMessagedatabaseReference = mfirebaseDatabase.getReference().child("Message");
-        
+
         // Initialize references to views
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mMessageListView = (ListView) findViewById(R.id.messageListView);
@@ -102,7 +102,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Todo send message on click listner
 
+                ChatMessages mchatMessages = new ChatMessages(mMessageEditText.getText().toString().trim(),mUsername,null);
 
+                mMessagedatabaseReference.push().setValue(mchatMessages);
                 //Clear input
 
                 mMessageEditText.setText("");
