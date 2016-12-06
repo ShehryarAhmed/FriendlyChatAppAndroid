@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        tools:text="Message" />
+        android:text="hello" />
 
     <TextView
         android:id="@+id/nameTextView"
@@ -27,6 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        tools:text="Name" />
+        android:text="shery" />
 
 </LinearLayout>

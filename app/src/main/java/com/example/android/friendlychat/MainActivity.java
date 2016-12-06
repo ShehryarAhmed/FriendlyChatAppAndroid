@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
         mUsername = ANONYMOUS;
 
-        mUsername = ANONYMOUS;
-
         mfirebaseDatabase = FirebaseDatabase.getInstance();
 
         mMessagedatabaseReference = mfirebaseDatabase.getReference().child("Message");
@@ -120,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         mchildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
                 ChatMessages chatMessages = dataSnapshot.getValue(ChatMessages.class);
                 mMessageAdapter.add(chatMessages);
 
