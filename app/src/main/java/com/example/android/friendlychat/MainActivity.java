@@ -109,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
                 ChatMessages mchatMessages = new ChatMessages(mMessageEditText.getText().toString().trim(),mUsername,null);
 
+                //send data firebase
+
                 mMessagedatabaseReference.push().setValue(mchatMessages);
                 //Clear input
                 mMessageEditText.setText("");

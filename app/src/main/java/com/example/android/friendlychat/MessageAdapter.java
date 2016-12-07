@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 /**
@@ -36,9 +38,9 @@ public class MessageAdapter extends ArrayAdapter<ChatMessages> {
         if(isphoto){
             messageTextView.setVisibility(View.GONE);
             photoImageView.setVisibility(View.VISIBLE);
-       /*     Glide.with(photoImageView.getContext())
+            Glide.with(photoImageView.getContext())
                     .load(chatMessages.getPhotoUrl())
-                    .into(photoImageView);*/
+                    .into(photoImageView);
         }
         else {
             messageTextView.setVisibility(View.VISIBLE);
