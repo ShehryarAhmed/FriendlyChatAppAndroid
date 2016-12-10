@@ -5,6 +5,7 @@ package com.example.android.friendlychat;
  */
 public class ChatMessages
 {
+
     private String text;
     private String name;
     private String photoUrl;

@@ -107,7 +107,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Todo send message on click listner
 
-                ChatMessages mchatMessages = new ChatMessages(mMessageEditText.getText().toString().trim(),mUsername,null);
+                ChatMessages mchatMessages = new ChatMessages(mMessageEditText.getText().toString().trim(),mUsername
+                        ,null);
 
                 //send data firebase
 
