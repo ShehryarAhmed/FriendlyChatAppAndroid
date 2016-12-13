@@ -82,13 +82,12 @@ public class MainActivity extends AppCompatActivity {
 
         List<ChatMessages> chatMessages = new ArrayList<>();
 
-        mMessageAdapter = new MessageAdapter(this,R.layout.chat_messages,chatMessages);
+        mMessageAdapter = new MessageAdapter(this, R.layout.chat_messages, chatMessages);
 
         mMessageListView.setAdapter(mMessageAdapter);
 
         //initialize progressBar
         mProgressBar.setVisibility(View.INVISIBLE);
-
 
 
         mMessageEditText.addTextChangedListener(new TextWatcher() {
@@ -100,10 +99,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(charSequence.toString().trim().length() > 0 ){
+                if (charSequence.toString().trim().length() > 0) {
                     mSendButton.setEnabled(true);
-                }
-                else {
+                } else {
                     mSendButton.setEnabled(false);
                 }
 
@@ -122,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Todo send message on click listner
 
-                ChatMessages mchatMessages = new ChatMessages(mMessageEditText.getText().toString().trim(),mUsername
-                        ,null);
+                ChatMessages mchatMessages = new ChatMessages(mMessageEditText.getText().toString().trim(), mUsername
+                        , null);
 
                 //send data firebase
 
@@ -134,16 +132,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         mMessagedatabaseReference.addChildEventListener(mchildEventListener);
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
-                if (mFirebaseUser != null){
-                    onSignedInitialize(mFirebaseUser);                }
-                else{
+                if (mFirebaseUser != null) {
+                    onSignedInitialize(mFirebaseUser.getDisplayName());
+                } else {
                     startActivityForResult(
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
@@ -162,9 +159,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu,menu);
+        menuInflater.inflate(R.menu.main_menu, menu);
         return true;
-         }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -175,36 +172,65 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
-        if (mAuthStateListener != null) {
-            mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
-        }
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        if (mAuthStateListener != null) {
+            mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+        }
+        detachDataBaseReadListner();
+        mMessageAdapter.clear();
+
     }
 
-    private void onSignedInitialize(String mUserName){
+    private void onSignedInitialize(String mUserName) {
         mUsername = mUserName;
         attachDataBaseReadListner();
     }
-    private void onSignOutCleanUp(){}
-    private void attachDataBaseReadListner(){mchildEventListener = new ChildEventListener() {
-        @Override
-        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-            ChatMessages chatMessages = dataSnapshot.getValue(ChatMessages.class);
-            mMessageAdapter.add(chatMessages);}
-        @Override
-        public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
-        @Override
-        public void onChildRemoved(DataSnapshot dataSnapshot) {}
-        @Override
-        public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
-        @Override
-        public void onCancelled(DatabaseError databaseError) {}
-    };
+    private void onSignOutCleanUp() {
+        mUsername = ANONYMOUS;
+        mMessageAdapter.clear();
+        detachDataBaseReadListner();
+    }
+
+    private void attachDataBaseReadListner() {
+        if (mchildEventListener == null) {
+            mchildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                    ChatMessages chatMessages = dataSnapshot.getValue(ChatMessages.class);
+                    mMessageAdapter.add(chatMessages);
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            };
+            mMessagedatabaseReference.addChildEventListener(mchildEventListener);
+        }
+    }
+
+    private void detachDataBaseReadListner() {
+        if (mchildEventListener != null) {
+            mMessagedatabaseReference.removeEventListener(mchildEventListener);
+        }
 
     }
 }
