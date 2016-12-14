@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mMessagedatabaseReference.addChildEventListener(mchildEventListener);
+//        mMessagedatabaseReference.addChildEventListener(mchildEventListener);
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
