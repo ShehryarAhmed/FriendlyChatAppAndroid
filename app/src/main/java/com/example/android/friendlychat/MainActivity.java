@@ -1,6 +1,7 @@
 package com.example.android.friendlychat;
 
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -120,8 +121,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Todo send message on click listner
 
-                ChatMessages mchatMessages = new ChatMessages(mMessageEditText.getText().toString().trim(), mUsername
-                        , null);
+                ChatMessages mchatMessages = new ChatMessages(mMessageEditText.getText().toString(), mUsername, null);
 
                 //send data firebase
 
@@ -138,9 +138,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
+
                 if (mFirebaseUser != null) {
                     onSignedInitialize(mFirebaseUser.getDisplayName());
                 } else {
+                    onSignOutCleanUp();
                     startActivityForResult(
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
@@ -156,16 +158,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
+
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+                // Sign-in succeeded, set up the UI
+                Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                // Sign in was canceled by the user, finish the activity
+                Toast.makeText(this, "Sign in canceled", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
     }
 
     @Override
@@ -181,13 +188,33 @@ public class MainActivity extends AppCompatActivity {
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
-        detachDataBaseReadListner();
         mMessageAdapter.clear();
-
+        detachDataBaseReadListner();
     }
 
-    private void onSignedInitialize(String mUserName) {
-        mUsername = mUserName;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sign_out_menu:
+                AuthUI.getInstance().signOut(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+
+   }
+
+
+    private void onSignedInitialize(String displayName) {
+        mUsername = displayName;
         attachDataBaseReadListner();
     }
 
@@ -230,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
     private void detachDataBaseReadListner() {
         if (mchildEventListener != null) {
             mMessagedatabaseReference.removeEventListener(mchildEventListener);
+            mchildEventListener = null;
         }
 
     }
