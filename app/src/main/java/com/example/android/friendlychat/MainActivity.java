@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                 // Sign in was canceled by the user, finish the activity
                 Toast.makeText(this, "Sign in canceled", Toast.LENGTH_SHORT).show();
                 finish();
-            }
+            }}
             else if(requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK){
                 Uri SelectedImageUri = data.getData();
                 StorageReference photoreference =
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
-    }
+
 
     @Override
     protected void onResume() {
