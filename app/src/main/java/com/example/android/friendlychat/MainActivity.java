@@ -2,6 +2,7 @@ package com.example.android.friendlychat;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         mMessagedatabaseReference = mfirebaseDatabase.getReference().child("Message");
         mChatPhotoReferenceeference = mFirebaseStorage.getReference().child("chat_photos");
-        
+
         // Initialize references to views
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mMessageListView = (ListView) findViewById(R.id.messageListView);
@@ -192,6 +193,12 @@ public class MainActivity extends AppCompatActivity {
                 // Sign in was canceled by the user, finish the activity
                 Toast.makeText(this, "Sign in canceled", Toast.LENGTH_SHORT).show();
                 finish();
+            }
+            else if(requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK){
+                Uri SelectedImageUri = data.getData();
+                StorageReference photoreference =
+                        mChatPhotoReferenceeference.child(SelectedImageUri.getLastPathSegment());
+                
             }
         }
     }
