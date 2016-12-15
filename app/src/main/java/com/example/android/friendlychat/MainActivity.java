@@ -28,6 +28,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int DEFAULT_MSG_LENGTH_LIMIT = 1000;
 
     public static final int RC_SIGN_IN = 1;
+
+    private static final int RC_PHOTO_PICKER =  2;
 
     private ListView mMessageListView;
     private MessageAdapter mMessageAdapter;
@@ -60,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
+    private FirebaseStorage mFirebaseStorage;
+
+    private StorageReference mChatPhotoReferenceeference;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,14 +79,15 @@ public class MainActivity extends AppCompatActivity {
 
         mfirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
-
+        mFirebaseStorage = FirebaseStorage.getInstance();
 
         mMessagedatabaseReference = mfirebaseDatabase.getReference().child("Message");
-
+        mChatPhotoReferenceeference = mFirebaseStorage.getReference().child("chat_photos");
+        
         // Initialize references to views
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mMessageListView = (ListView) findViewById(R.id.messageListView);
-        mPhotoPickerButton = (ImageButton) findViewById(R.id.photoPickerButton);
+        mPhotoPickerButton = (ImageButton) findViewById(R.id.mPhotoPickerButton);
         mMessageEditText = (EditText) findViewById(R.id.messageEditText);
         mSendButton = (Button) findViewById(R.id.sendButton);
 
@@ -115,6 +125,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mMessageEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(DEFAULT_MSG_LENGTH_LIMIT)});
+
+        mPhotoPickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "heloo", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
+            }
+        });
 
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override

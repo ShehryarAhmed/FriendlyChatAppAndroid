@@ -30,6 +30,7 @@ dependencies {
     //firebaseUI database only
     compile 'com.firebaseui:firebase-ui-database:1.0.1'
     //firebaseStorage only
+    compile 'com.google.firebase:firebase-storage:9.2.0'
     compile 'com.firebaseui:firebase-ui-storage:1.0.1'
     //firebaseAuth only
     compile 'com.firebaseui:firebase-ui-auth:1.0.1'
