@@ -34,7 +34,12 @@ dependencies {
     compile 'com.firebaseui:firebase-ui-storage:1.0.1'
     //firebaseAuth only
     compile 'com.firebaseui:firebase-ui-auth:1.0.1'
+    compile 'com.google.android.gms:play-services-auth:9.2.0'
+
     // Single target that includes all FirebaseUI libraries above
     compile 'com.firebaseui:firebase-ui:1.0.1'
+    //notification
+    compile 'com.google.firebase:firebase-messaging:9.6.0'
+
 }
 apply plugin: 'com.google.gms.google-services'
