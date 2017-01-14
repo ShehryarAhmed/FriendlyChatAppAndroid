@@ -25,6 +25,8 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FacebookAuthCredential;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -74,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
 
     private StorageReference mChatPhotoReferenceeference;
 
+    private AuthCredential mGooglecredential;
+
+    private AuthCredential mFacebookcredential;
+
 
 
     @Override
@@ -82,6 +88,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mUsername = ANONYMOUS;
+
+        //AuthCredential credential
+
+        mGooglecredential = GoogleAuthProvider.getCredential(googleIdToken, null);
+
+        mFacebookcredential = FacebookAuthProvider.getCredential(token.getToken());
 
         mfirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
